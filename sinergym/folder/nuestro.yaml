@@ -1,0 +1,145 @@
+# Documentation: https://ugr-sail.github.io/sinergym/compilation/main/pages/environments_registration.html
+# ---------------------------------------------------------------------------- #
+#                        ID BASE FROM ENVIRONMNET NAMES                        #
+# ---------------------------------------------------------------------------- #
+id_base: nuestro
+
+# ---------------------------------------------------------------------------- #
+#                         BUILDING AND WEATHER SETTINGS                        #
+# ---------------------------------------------------------------------------- #
+building_file: idf.epJSON
+
+# A environment alternative for each weather key
+weather_specification:
+  weather_files:
+    - URY_Montevideo.epw
+  keys:
+    - uru
+
+# ---------------------------------------------------------------------------- #
+#                         BUILDING EXTRA CONFIGURATION                         #
+# ---------------------------------------------------------------------------- #
+building_config: null
+
+
+# ---------------------------------------------------------------------------- #
+#                        WEATHER VARIABILITY (OPTIONAL)                        #
+# ---------------------------------------------------------------------------- #
+# Alternative stochastic environments if it is defined
+#weather_variability:
+#  Dry Bulb Temperature:
+#    - 1.0 # sigma
+#    - 0.0 # mu
+#    - 24.0 # tau
+
+# ---------------------------------------------------------------------------- #
+#                          EPISODES FOLDER GENERATION                          #
+# ---------------------------------------------------------------------------- #
+max_ep_store: 1
+
+# ---------------------------------------------------------------------------- #
+#                             OBSERVATION VARIABLES                            #
+# ---------------------------------------------------------------------------- #
+
+# --------------- TIME VARIABLES (same name as EnergyPlus API) --------------- #
+time_variables:
+  - month
+  - day_of_month
+  - hour
+# More variables in Data Transfer API: https://energyplus.readthedocs.io/en/latest/datatransfer.html
+
+# ----------------------------- OUTPUT:VARIABLES ----------------------------- #
+variables:
+  # Variables ambientales (mantiene igual)
+  Site Outdoor Air DryBulb Temperature:
+    variable_names: outdoor_temperature
+    keys: Environment
+  Site Outdoor Air Relative Humidity:
+    variable_names: outdoor_humidity
+    keys: Environment
+  
+  # Variables de zona (cambia SPACE5-1 por NORTH PERIMETER)
+  Zone Air Temperature:
+    variable_names: air_temperature
+    keys: NORTH PERIMETER
+  Zone Air Relative Humidity:
+    variable_names: air_humidity
+    keys: NORTH PERIMETER
+  
+  # Variables de la bomba de calor (añadidas)
+  Heat Pump Electricity Rate:
+    variable_names: heat_pump_power
+    keys: BOMBACALOR_HP
+
+
+# ------------------------------- OUTPUT:METERS ------------------------------ #
+meters:
+#  Electricity:HVAC: total_electricity_HVAC
+  Heat Pump:Heating:Electricity: total_electricity_HVAC
+
+# ---------------------------------------------------------------------------- #
+#                               ACTION VARIABLES                               #
+# ---------------------------------------------------------------------------- #
+
+# --------------------------- ACTUATORS TO CONTROL --------------------------- #
+actuators:
+  # Para controlar el setpoint de calefacción radiante (Setpoint_Constante_22)
+  Constant:
+    variable_name: electrovalve
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+  
+  # Para controlar el setpoint de la bomba de calor (Temperatura_Calefaccion_Schedule)
+  Temperatura_Calefaccion_Schedule:
+    variable_name: bomba
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+
+# ---------------------------------------------------------------------------- #
+#                   DYNAMIC CONTEXT CONFIGURABLE IN REAL-TIME                  #
+# ---------------------------------------------------------------------------- #
+context: {}
+
+# ---------------------------------------------------------------------------- #
+#                                 ACTIONS SPACE                                #
+# ---------------------------------------------------------------------------- #
+action_space: gym.spaces.Box(low=np.array([12.0, 23.25], dtype=np.float32), high=np.array([23.25, 30.0], dtype=np.float32), shape=(2,), dtype=np.float32)
+
+action_space_discrete: gym.spaces.Discrete(10)
+
+# ---------------------------------------------------------------------------- #
+#                                REWARD FUNCTION                               #
+# ---------------------------------------------------------------------------- #
+reward: sinergym.utils.rewards:LinearReward
+
+reward_kwargs:
+  temperature_variables:
+    - air_temperature
+  energy_variables:
+    - heat_pump_power
+  range_comfort_winter:
+    - 20.0
+    - 23.5
+  range_comfort_summer:
+    - 23.0
+    - 26.0
+  summer_start:
+    - 11
+    - 1
+  summer_final:
+    - 3
+    - 30
+  energy_weight: 0.5
+  lambda_energy: 1.0e-4
+  lambda_temperature: 1.0
+
+  # ---------------------------------------------------------------------------- #
+#                                WRAPPERS CONFIG                               #
+# ---------------------------------------------------------------------------- #
+wrappers:
+  - DatetimeWrapper
+  - NormalizeObservation
+  - ForecastWrapper:
+      forecast_csv: /workspaces/sinergym/sinergym/data/weather/forecast/forecast_24h.csv
+      horizon: 24
+  - EnergyCostWrapper

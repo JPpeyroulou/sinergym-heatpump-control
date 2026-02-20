@@ -1,0 +1,143 @@
+# Documentation: https://ugr-sail.github.io/sinergym/compilation/main/pages/environments_registration.html
+# ---------------------------------------------------------------------------- #
+#                        ID BASE FROM ENVIRONMNET NAMES                        #
+# ---------------------------------------------------------------------------- #
+id_base: nuestroMultizonaPPO_l15
+
+# ---------------------------------------------------------------------------- #
+#                         BUILDING AND WEATHER SETTINGS                        #
+# ---------------------------------------------------------------------------- #
+building_file: idf_multiplesZonas_Bomba2.epJSON
+
+weather_specification:
+  weather_files:
+    - URY_Montevideo.epw
+  keys:
+    - uru
+
+# ---------------------------------------------------------------------------- #
+#                         BUILDING EXTRA CONFIGURATION                         #
+# ---------------------------------------------------------------------------- #
+building_config: null
+
+# ---------------------------------------------------------------------------- #
+#                          EPISODES FOLDER GENERATION                          #
+# ---------------------------------------------------------------------------- #
+max_ep_store: 10
+
+# ---------------------------------------------------------------------------- #
+#                             OBSERVATION VARIABLES                            #
+# ---------------------------------------------------------------------------- #
+time_variables:
+  - month
+  - day_of_month
+  - hour
+
+variables:
+  Zone Radiant HVAC Heating Rate:
+    variable_names: heating_rate
+    keys: 
+      - LOZARADIANTE_ZONANORTH
+      - LOZARADIANTE_ZONASOUTH
+      - LOZARADIANTE_ZONAEAST
+      - LOZARADIANTE_ZONAWEST
+  
+  Site Outdoor Air DryBulb Temperature:
+    variable_names: outdoor_temperature
+    keys: Environment
+    
+  Site Outdoor Air Relative Humidity:
+    variable_names: outdoor_humidity
+    keys: Environment
+  
+  Zone Air Temperature:
+    variable_names: air_temperature
+    keys:
+      - NORTH PERIMETER
+      - SOUTH PERIMETER
+      - EAST PERIMETER
+      - WEST PERIMETER
+    
+  Zone Air Relative Humidity:
+    variable_names: air_humidity
+    keys:
+      - NORTH PERIMETER
+      - SOUTH PERIMETER
+      - EAST PERIMETER
+      - WEST PERIMETER
+
+  Heat Pump Electricity Rate:
+    variable_names: heat_pump_power
+    keys: BOMBACALOR_HP
+
+meters:
+  Heat Pump:Heating:Electricity: total_electricity_HVAC
+
+# ---------------------------------------------------------------------------- #
+#                               ACTION VARIABLES                               #
+# ---------------------------------------------------------------------------- #
+actuators:
+  ZonaNorth:
+    variable_name: electrovalve_north
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+  ZonaSouth:
+    variable_name: electrovalve_south
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+  ZonaEast:
+    variable_name: electrovalve_east
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+  ZonaWest:
+    variable_name: electrovalve_west
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+  Temperatura_Calefaccion_Schedule:
+    variable_name: bomba
+    element_type: Schedule:Compact
+    value_type: Schedule Value
+
+context: {}
+
+# ---------------------------------------------------------------------------- #
+#                                 ACTIONS SPACE                                #
+# ---------------------------------------------------------------------------- #
+action_space: gym.spaces.Box(
+  low=np.array([0, 0, 0, 0, 15], dtype=np.float32), 
+  high=np.array([0, 0, 1, 1, 45], dtype=np.float32), 
+  shape=(5,), 
+  dtype=np.float32
+  )
+
+only_discrete: false
+
+# ---------------------------------------------------------------------------- #
+#                                REWARD FUNCTION                               #
+# ---------------------------------------------------------------------------- #
+reward: sinergym.utils.rewards:NuestroRewardMultizona
+
+reward_kwargs:
+  temperature_variables:
+    - east_perimeter_air_temperature
+    - west_perimeter_air_temperature
+  humidity_variables:
+    - east_perimeter_air_humidity
+    - west_perimeter_air_humidity
+  energy_variables:
+    - heat_pump_power
+  energy_weight: 0.5
+  lambda_energy: 1.0
+  lambda_temperature: 15.0
+  tarifa_json: /workspaces/sinergym/sinergym/data/tarifas/tarifas_ute.json
+
+# ---------------------------------------------------------------------------- #
+#                                WRAPPERS CONFIG                               #
+# ---------------------------------------------------------------------------- #
+wrappers:
+  - DatetimeWrapper
+  - NormalizeObservation
+  - ForecastWrapper:
+      forecast_csv: /workspaces/sinergym/sinergym/data/weather/forecast/forecast_24h.csv
+      horizon: 24
+  - EnergyCostWrapper

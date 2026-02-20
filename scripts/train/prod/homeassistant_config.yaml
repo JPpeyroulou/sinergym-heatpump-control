@@ -1,0 +1,325 @@
+# ============================================================================
+# CONFIGURACIÓN DE HOME ASSISTANT PARA SINERGYM RL CONTROL
+# ============================================================================
+# 
+# INSTRUCCIONES:
+# 1. Copia este contenido en tu archivo configuration.yaml de Home Assistant
+# 2. O agrégalo como un archivo separado en config/packages/ (recomendado)
+# 3. Reinicia Home Assistant
+# 4. Verifica que las entidades se hayan creado correctamente
+#
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# SENSORES: Input Numbers para simular valores de sensores
+# ----------------------------------------------------------------------------
+input_number:
+  # Heating rate variables (4)
+  north_heating_rate:
+    name: "North Heating Rate"
+    min: 0
+    max: 1
+    step: 0.01
+    unit_of_measurement: ""
+    initial: 0
+  
+  south_heating_rate:
+    name: "South Heating Rate"
+    min: 0
+    max: 1
+    step: 0.01
+    unit_of_measurement: ""
+    initial: 0
+  
+  east_heating_rate:
+    name: "East Heating Rate"
+    min: 0
+    max: 1
+    step: 0.01
+    unit_of_measurement: ""
+    initial: 0
+  
+  west_heating_rate:
+    name: "West Heating Rate"
+    min: 0
+    max: 1
+    step: 0.01
+    unit_of_measurement: ""
+    initial: 0
+  
+  # Outdoor variables (2)
+  outdoor_temperature:
+    name: "Outdoor Temperature"
+    min: -10
+    max: 50
+    step: 0.1
+    unit_of_measurement: "°C"
+    initial: 20
+  
+  outdoor_humidity:
+    name: "Outdoor Humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 50
+  
+  # Air temperature variables (4)
+  north_air_temperature:
+    name: "North Air Temperature"
+    min: 10
+    max: 35
+    step: 0.1
+    unit_of_measurement: "°C"
+    initial: 22
+  
+  south_air_temperature:
+    name: "South Air Temperature"
+    min: 10
+    max: 35
+    step: 0.1
+    unit_of_measurement: "°C"
+    initial: 22
+  
+  east_air_temperature:
+    name: "East Air Temperature"
+    min: 10
+    max: 35
+    step: 0.1
+    unit_of_measurement: "°C"
+    initial: 22
+  
+  west_air_temperature:
+    name: "West Air Temperature"
+    min: 10
+    max: 35
+    step: 0.1
+    unit_of_measurement: "°C"
+    initial: 22
+  
+  # Air humidity variables (4)
+  north_air_humidity:
+    name: "North Air Humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 50
+  
+  south_air_humidity:
+    name: "South Air Humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 50
+  
+  east_air_humidity:
+    name: "East Air Humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 50
+  
+  west_air_humidity:
+    name: "West Air Humidity"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 50
+  
+  # Heat pump power (1)
+  heat_pump_power:
+    name: "Heat Pump Power"
+    min: 0
+    max: 20000
+    step: 10
+    unit_of_measurement: "W"
+    initial: 1000
+  
+  # Meter (1)
+  total_electricity_hvac:
+    name: "Total Electricity HVAC"
+    min: 0
+    max: 100000
+    step: 1
+    unit_of_measurement: "Wh"
+    initial: 0
+
+  # ----------------------------------------------------------------------------
+  # ACTUADORES: Input Numbers para control (5 actuadores)
+  # IMPORTANTE: Estos valores están ajustados según tus especificaciones:
+  # - Zonas: 0-100 (%)
+  # - Temperatura: 15-30 (°C)
+  # ----------------------------------------------------------------------------
+  # Zonas (4 actuadores - valores 0-100, %)
+  zona_north:
+    name: "Zona North Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  zona_south:
+    name: "Zona South Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  zona_east:
+    name: "Zona East Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  zona_west:
+    name: "Zona West Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  # Temperatura de calefacción (1 actuador - rango 15-30°C según tu especificación)
+  temperatura_calefaccion:
+    name: "Temperatura Calefacción"
+    min: 15
+    max: 30
+    step: 0.5
+    unit_of_measurement: "°C"
+    initial: 22.5
+    icon: mdi:thermometer
+
+# ----------------------------------------------------------------------------
+# SENSORES TEMPLATE: Exponer los valores como sensores
+# ----------------------------------------------------------------------------
+template:
+  - sensor:
+      # Heating rate sensors
+      - name: "North Heating Rate Sensor"
+        unique_id: "north_heating_rate_sensor"
+        state: "{{ states('input_number.north_heating_rate') | float }}"
+        unit_of_measurement: ""
+      
+      - name: "South Heating Rate Sensor"
+        unique_id: "south_heating_rate_sensor"
+        state: "{{ states('input_number.south_heating_rate') | float }}"
+        unit_of_measurement: ""
+      
+      - name: "East Heating Rate Sensor"
+        unique_id: "east_heating_rate_sensor"
+        state: "{{ states('input_number.east_heating_rate') | float }}"
+        unit_of_measurement: ""
+      
+      - name: "West Heating Rate Sensor"
+        unique_id: "west_heating_rate_sensor"
+        state: "{{ states('input_number.west_heating_rate') | float }}"
+        unit_of_measurement: ""
+      
+      # Outdoor sensors
+      - name: "Outdoor Temperature Sensor"
+        unique_id: "outdoor_temperature_sensor"
+        state: "{{ states('input_number.outdoor_temperature') | float }}"
+        unit_of_measurement: "°C"
+      
+      - name: "Outdoor Humidity Sensor"
+        unique_id: "outdoor_humidity_sensor"
+        state: "{{ states('input_number.outdoor_humidity') | float }}"
+        unit_of_measurement: "%"
+      
+      # Air temperature sensors
+      - name: "North Air Temperature Sensor"
+        unique_id: "north_air_temperature_sensor"
+        state: "{{ states('input_number.north_air_temperature') | float }}"
+        unit_of_measurement: "°C"
+      
+      - name: "South Air Temperature Sensor"
+        unique_id: "south_air_temperature_sensor"
+        state: "{{ states('input_number.south_air_temperature') | float }}"
+        unit_of_measurement: "°C"
+      
+      - name: "East Air Temperature Sensor"
+        unique_id: "east_air_temperature_sensor"
+        state: "{{ states('input_number.east_air_temperature') | float }}"
+        unit_of_measurement: "°C"
+      
+      - name: "West Air Temperature Sensor"
+        unique_id: "west_air_temperature_sensor"
+        state: "{{ states('input_number.west_air_temperature') | float }}"
+        unit_of_measurement: "°C"
+      
+      # Air humidity sensors
+      - name: "North Air Humidity Sensor"
+        unique_id: "north_air_humidity_sensor"
+        state: "{{ states('input_number.north_air_humidity') | float }}"
+        unit_of_measurement: "%"
+      
+      - name: "South Air Humidity Sensor"
+        unique_id: "south_air_humidity_sensor"
+        state: "{{ states('input_number.south_air_humidity') | float }}"
+        unit_of_measurement: "%"
+      
+      - name: "East Air Humidity Sensor"
+        unique_id: "east_air_humidity_sensor"
+        state: "{{ states('input_number.east_air_humidity') | float }}"
+        unit_of_measurement: "%"
+      
+      - name: "West Air Humidity Sensor"
+        unique_id: "west_air_humidity_sensor"
+        state: "{{ states('input_number.west_air_humidity') | float }}"
+        unit_of_measurement: "%"
+      
+      # Heat pump sensor
+      - name: "Heat Pump Power Sensor"
+        unique_id: "heat_pump_power_sensor"
+        state: "{{ states('input_number.heat_pump_power') | float }}"
+        unit_of_measurement: "W"
+      
+      # Meter sensor
+      - name: "Total Electricity HVAC Sensor"
+        unique_id: "total_electricity_hvac_sensor"
+        state: "{{ states('input_number.total_electricity_hvac') | float }}"
+        unit_of_measurement: "Wh"
+
+# ----------------------------------------------------------------------------
+# AUTOMATIZACIÓN OPCIONAL: Actualizar heating rates basándose en controles
+# ----------------------------------------------------------------------------
+automation:
+  - alias: "Update Heating Rates from Zone Controls"
+    description: "Actualiza los heating rates cuando cambian los controles de zona"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_number.zona_north
+          - input_number.zona_south
+          - input_number.zona_east
+          - input_number.zona_west
+    action:
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.north_heating_rate
+          value: "{{ states('input_number.zona_north') | float }}"
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.south_heating_rate
+          value: "{{ states('input_number.zona_south') | float }}"
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.east_heating_rate
+          value: "{{ states('input_number.zona_east') | float }}"
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.west_heating_rate
+          value: "{{ states('input_number.zona_west') | float }}"
+    mode: single

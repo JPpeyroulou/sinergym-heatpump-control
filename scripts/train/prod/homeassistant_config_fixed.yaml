@@ -1,0 +1,67 @@
+# ============================================================================
+# CONFIGURACIÓN CORREGIDA DE HOME ASSISTANT PARA SINERGYM RL CONTROL
+# ============================================================================
+# 
+# PROBLEMA IDENTIFICADO:
+# - Los input_number en packages requieren estructura específica
+# - Algunas versiones de HA requieren que estén en la raíz del package
+# - Los input_number NO se pueden crear dinámicamente sin reinicio
+#
+# SOLUCIÓN:
+# 1. Esta configuración usa la estructura correcta para packages
+# 2. Incluye solo los 5 actuadores necesarios (según tu descripción)
+# 3. Los valores están ajustados según tus especificaciones
+#
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# ACTUADORES: Input Numbers para control (5 actuadores)
+# NOTA: Estos son los únicos que necesitas según tu descripción
+# ----------------------------------------------------------------------------
+input_number:
+  # Zonas (4 actuadores - valores 0-100, %)
+  zona_north:
+    name: "Zona North Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  zona_south:
+    name: "Zona South Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  zona_east:
+    name: "Zona East Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  zona_west:
+    name: "Zona West Control"
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    initial: 0
+    icon: mdi:radiator
+  
+  # Temperatura de calefacción (1 actuador - rango 15-30°C según tu descripción)
+  temperatura_calefaccion:
+    name: "Temperatura Calefacción"
+    min: 15
+    max: 30
+    step: 0.5
+    unit_of_measurement: "°C"
+    initial: 22.5
+    icon: mdi:thermometer

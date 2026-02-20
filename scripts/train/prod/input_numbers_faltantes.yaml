@@ -1,0 +1,107 @@
+# ============================================================================
+# INPUT_NUMBERS FALTANTES PARA SENSORES BASE
+# ============================================================================
+# 
+# INSTRUCCIONES:
+# 1. Verifica si estos input_number existen en tu /config/packages/sinergym.yaml
+# 2. Si no existen, agrégalos a la sección input_number:
+# 3. Reinicia Home Assistant
+#
+# ============================================================================
+
+# Agregar estos input_number dentro de: input_number:
+south_heating_rate:
+  name: "South Heating Rate"
+  min: 0
+  max: 1
+  step: 0.01
+  unit_of_measurement: ""
+  initial: 0
+
+east_heating_rate:
+  name: "East Heating Rate"
+  min: 0
+  max: 1
+  step: 0.01
+  unit_of_measurement: ""
+  initial: 0
+
+west_heating_rate:
+  name: "West Heating Rate"
+  min: 0
+  max: 1
+  step: 0.01
+  unit_of_measurement: ""
+  initial: 0
+
+outdoor_humidity:
+  name: "Outdoor Humidity"
+  min: 0
+  max: 100
+  step: 1
+  unit_of_measurement: "%"
+  initial: 50
+
+south_air_temperature:
+  name: "South Air Temperature"
+  min: 10
+  max: 35
+  step: 0.1
+  unit_of_measurement: "°C"
+  initial: 22
+
+east_air_temperature:
+  name: "East Air Temperature"
+  min: 10
+  max: 35
+  step: 0.1
+  unit_of_measurement: "°C"
+  initial: 22
+
+west_air_temperature:
+  name: "West Air Temperature"
+  min: 10
+  max: 35
+  step: 0.1
+  unit_of_measurement: "°C"
+  initial: 22
+
+north_air_humidity:
+  name: "North Air Humidity"
+  min: 0
+  max: 100
+  step: 1
+  unit_of_measurement: "%"
+  initial: 50
+
+south_air_humidity:
+  name: "South Air Humidity"
+  min: 0
+  max: 100
+  step: 1
+  unit_of_measurement: "%"
+  initial: 50
+
+east_air_humidity:
+  name: "East Air Humidity"
+  min: 0
+  max: 100
+  step: 1
+  unit_of_measurement: "%"
+  initial: 50
+
+west_air_humidity:
+  name: "West Air Humidity"
+  min: 0
+  max: 100
+  step: 1
+  unit_of_measurement: "%"
+  initial: 50
+
+total_electricity_hvac:
+  name: "Total Electricity HVAC"
+  min: 0
+  max: 100000
+  step: 1
+  unit_of_measurement: "Wh"
+  initial: 0

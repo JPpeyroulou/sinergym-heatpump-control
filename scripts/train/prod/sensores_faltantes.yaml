@@ -1,0 +1,72 @@
+# ============================================================================
+# SENSORES TEMPLATE FALTANTES PARA HOME ASSISTANT
+# ============================================================================
+# 
+# INSTRUCCIONES:
+# 1. Copia este contenido y agrégalo a tu archivo /config/packages/sinergym.yaml
+# 2. Asegúrate de que esté dentro de la sección template: - sensor:
+# 3. Verifica que los input_number base existan
+# 4. Reinicia Home Assistant
+#
+# ============================================================================
+
+# Agregar estos sensores dentro de: template: - sensor:
+- name: "South Heating Rate Sensor"
+  unique_id: "south_heating_rate_sensor"
+  state: "{{ states('input_number.south_heating_rate') | float }}"
+  unit_of_measurement: ""
+
+- name: "East Heating Rate Sensor"
+  unique_id: "east_heating_rate_sensor"
+  state: "{{ states('input_number.east_heating_rate') | float }}"
+  unit_of_measurement: ""
+
+- name: "West Heating Rate Sensor"
+  unique_id: "west_heating_rate_sensor"
+  state: "{{ states('input_number.west_heating_rate') | float }}"
+  unit_of_measurement: ""
+
+- name: "Outdoor Humidity Sensor"
+  unique_id: "outdoor_humidity_sensor"
+  state: "{{ states('input_number.outdoor_humidity') | float }}"
+  unit_of_measurement: "%"
+
+- name: "South Air Temperature Sensor"
+  unique_id: "south_air_temperature_sensor"
+  state: "{{ states('input_number.south_air_temperature') | float }}"
+  unit_of_measurement: "°C"
+
+- name: "East Air Temperature Sensor"
+  unique_id: "east_air_temperature_sensor"
+  state: "{{ states('input_number.east_air_temperature') | float }}"
+  unit_of_measurement: "°C"
+
+- name: "West Air Temperature Sensor"
+  unique_id: "west_air_temperature_sensor"
+  state: "{{ states('input_number.west_air_temperature') | float }}"
+  unit_of_measurement: "°C"
+
+- name: "North Air Humidity Sensor"
+  unique_id: "north_air_humidity_sensor"
+  state: "{{ states('input_number.north_air_humidity') | float }}"
+  unit_of_measurement: "%"
+
+- name: "South Air Humidity Sensor"
+  unique_id: "south_air_humidity_sensor"
+  state: "{{ states('input_number.south_air_humidity') | float }}"
+  unit_of_measurement: "%"
+
+- name: "East Air Humidity Sensor"
+  unique_id: "east_air_humidity_sensor"
+  state: "{{ states('input_number.east_air_humidity') | float }}"
+  unit_of_measurement: "%"
+
+- name: "West Air Humidity Sensor"
+  unique_id: "west_air_humidity_sensor"
+  state: "{{ states('input_number.west_air_humidity') | float }}"
+  unit_of_measurement: "%"
+
+- name: "Total Electricity HVAC Sensor"
+  unique_id: "total_electricity_hvac_sensor"
+  state: "{{ states('input_number.total_electricity_hvac') | float }}"
+  unit_of_measurement: "Wh"

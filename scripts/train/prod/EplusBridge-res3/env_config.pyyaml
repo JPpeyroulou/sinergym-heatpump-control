@@ -1,0 +1,122 @@
+!EplusEnv
+building_file: idf_multiplesZonas.epJSON
+weather_files: URY_Montevideo.epw
+action_space: !GymSpace
+  class: !Class 'gymnasium.spaces.box.Box'
+  arguments:
+    low: !NumpyArray
+      object:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 15.0
+      dtype: numpy:float32
+    high: !NumpyArray
+      object:
+      - 0.0
+      - 0.0
+      - 1.0
+      - 1.0
+      - 45.0
+      dtype: numpy:float32
+    shape: !Tuple
+    - 5
+    dtype: numpy:float32
+time_variables:
+- month
+- day_of_month
+- hour
+variables:
+  lozaradiante_zonanorth_heating_rate: !Tuple
+  - Zone Radiant HVAC Heating Rate
+  - LOZARADIANTE_ZONANORTH
+  lozaradiante_zonasouth_heating_rate: !Tuple
+  - Zone Radiant HVAC Heating Rate
+  - LOZARADIANTE_ZONASOUTH
+  lozaradiante_zonaeast_heating_rate: !Tuple
+  - Zone Radiant HVAC Heating Rate
+  - LOZARADIANTE_ZONAEAST
+  lozaradiante_zonawest_heating_rate: !Tuple
+  - Zone Radiant HVAC Heating Rate
+  - LOZARADIANTE_ZONAWEST
+  outdoor_temperature: !Tuple
+  - Site Outdoor Air DryBulb Temperature
+  - Environment
+  outdoor_humidity: !Tuple
+  - Site Outdoor Air Relative Humidity
+  - Environment
+  north_perimeter_air_temperature: !Tuple
+  - Zone Air Temperature
+  - NORTH PERIMETER
+  south_perimeter_air_temperature: !Tuple
+  - Zone Air Temperature
+  - SOUTH PERIMETER
+  east_perimeter_air_temperature: !Tuple
+  - Zone Air Temperature
+  - EAST PERIMETER
+  west_perimeter_air_temperature: !Tuple
+  - Zone Air Temperature
+  - WEST PERIMETER
+  north_perimeter_air_humidity: !Tuple
+  - Zone Air Relative Humidity
+  - NORTH PERIMETER
+  south_perimeter_air_humidity: !Tuple
+  - Zone Air Relative Humidity
+  - SOUTH PERIMETER
+  east_perimeter_air_humidity: !Tuple
+  - Zone Air Relative Humidity
+  - EAST PERIMETER
+  west_perimeter_air_humidity: !Tuple
+  - Zone Air Relative Humidity
+  - WEST PERIMETER
+  heat_pump_power: !Tuple
+  - Heat Pump Electricity Rate
+  - BOMBACALOR_HP
+meters:
+  Heat Pump:Heating:Electricity: total_electricity_HVAC
+actuators:
+  heating_setpoint_1: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - Heating Setpoint 1
+  cooling_setpoint_1: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - Cooling Setpoint 1
+  heating_setpoint_2: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - Heating Setpoint 2
+  cooling_setpoint_2: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - Cooling Setpoint 2
+  heating_setpoint_3: !Tuple
+  - Schedule:Compact
+  - Schedule Value
+  - Heating Setpoint 3
+context: {}
+initial_context: null
+weather_variability: null
+reward: !Class 'sinergym.utils.rewards.NuestroRewardMultizona'
+reward_kwargs:
+  temperature_variables:
+  - east_perimeter_air_temperature
+  - west_perimeter_air_temperature
+  humidity_variables:
+  - east_perimeter_air_humidity
+  - west_perimeter_air_humidity
+  energy_variables:
+  - heat_pump_power
+  energy_weight: 0.5
+  lambda_energy: 1.0
+  lambda_temperature: 30
+  high_price: 14.493
+  low_price: 4.556
+  schedule_csv: /workspaces/sinergym/sinergym/data/schedule/schedule.csv
+max_ep_store: 10
+env_name: EplusBridge
+building_config:
+  timesteps_per_hour: 4
+seed: null

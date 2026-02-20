@@ -1,0 +1,512 @@
+Couldn't import dot_parser, loading of dot files will not be possible.
+✅ Entorno 'Eplus-pyenv-multizona-production-v1' registrado en Gymnasium
+⚠️  Sinergym no disponible, solo registrado en Gymnasium
+✅ Entorno de producción registrado
+
+======================================================================
+🚀 SISTEMA DE APRENDIZAJE ONLINE EN PRODUCCIÓN
+======================================================================
+📋 Configuración cargada: multizona_production_online
+
+🎯 Creando entorno: Eplus-pyenv-multizona-production-v1
+   Tipo: production
+   ✅ Recompensa importada: NuestroRewardMultizona
+   ✅ Action space procesado desde YAML: 5 dimensiones
+
+🔍 DEBUG: Procesando variables del YAML...
+   Variables en YAML (antes de procesar): ['Zone Radiant HVAC Heating Rate', 'Site Outdoor Air DryBulb Temperature', 'Site Outdoor Air Relative Humidity', 'Zone Air Temperature', 'Zone Air Relative Humidity', 'Heat Pump Electricity Rate']
+   ✅ Variables procesadas: 6 variables
+   Variables finales: ['Zone Radiant HVAC Heating Rate', 'Site Outdoor Air DryBulb Temperature', 'Site Outdoor Air Relative Humidity', 'Zone Air Temperature', 'Zone Air Relative Humidity', 'Heat Pump Electricity Rate']
+
+🔍 DEBUG: Procesando meters del YAML...
+   Meters en YAML (antes de procesar): {'Heat Pump:Heating:Electricity': 'total_electricity_HVAC'}
+   ✅ Meters procesados: 1 meters
+   Meters finales: {'total_electricity_HVAC': 'Heat Pump:Heating:Electricity'}
+
+📊 DESGLOSE DE DIMENSIONES DEL ENTORNO (BASE, SIN WRAPPERS):
+   time_variables (3): ['month', 'day_of_month', 'hour']
+   variable_names (15):
+      [0] lozaradiante_zonanorth_heating_rate
+      [1] lozaradiante_zonasouth_heating_rate
+      [2] lozaradiante_zonaeast_heating_rate
+      [3] lozaradiante_zonawest_heating_rate
+      [4] outdoor_temperature
+      [5] outdoor_humidity
+      [6] north_perimeter_air_temperature
+      [7] south_perimeter_air_temperature
+      [8] east_perimeter_air_temperature
+      [9] west_perimeter_air_temperature
+      [10] north_perimeter_air_humidity
+      [11] south_perimeter_air_humidity
+      [12] east_perimeter_air_humidity
+      [13] west_perimeter_air_humidity
+      [14] heat_pump_power
+   meter_names (1): ['total_electricity_HVAC']
+   TOTAL BASE: 19 dimensiones
+   ESPERADO: 19 dimensiones (3 time + 15 variables + 1 meter)
+[38;20m[REWARD] (INFO) : Reward function initialized.[0m
+   ✅ Conexión con Home Assistant verificada
+✅ HomeAssistantBridge inicializado
+   URL: http://172.17.0.1:8123
+   Sensores: 16
+   Actuadores: 5
+   Action delay: 1.0s
+   Sensor delay: 0.5s
+   Timestep delay: 300.0s (5.0 minutos entre pasos)
+   ✅ Home Assistant bridge inicializado
+✅ PyEnvProduction inicializado: Eplus-pyenv-multizona-production-v1
+   Variables: ['lozaradiante_zonanorth_heating_rate', 'lozaradiante_zonasouth_heating_rate', 'lozaradiante_zonaeast_heating_rate', 'lozaradiante_zonawest_heating_rate', 'outdoor_temperature', 'outdoor_humidity', 'north_perimeter_air_temperature', 'south_perimeter_air_temperature', 'east_perimeter_air_temperature', 'west_perimeter_air_temperature', 'north_perimeter_air_humidity', 'south_perimeter_air_humidity', 'east_perimeter_air_humidity', 'west_perimeter_air_humidity', 'heat_pump_power']
+   Modo datos: homeassistant
+   Action space: Box([ 0.  0.  0.  0. 15.], [ 0.  0.  1.  1. 45.], (5,), float32)
+✅ Entorno de producción creado:
+   - Variables: 15
+   - Modo datos: homeassistant
+   - Acciones: 5 dimensiones
+
+🎁 Aplicando wrappers (3 configurados):
+[38;20m[WRAPPER LoggerWrapper] (INFO) : Wrapper initialized.[0m
+   ✅ LoggerWrapper
+[38;20m[WRAPPER NormalizeObservation] (INFO) : Wrapper initialized.[0m
+   ✅ NormalizeObservation
+[38;20m[WRAPPER NormalizeAction] (INFO) : New normalized action space: Box(-1.0, 1.0, (5,), float32)[0m
+[38;20m[WRAPPER NormalizeAction] (INFO) : Wrapper initialized.[0m
+   ✅ NormalizeAction
+
+🔍 Verificando action_space del modelo para ajustar entorno...
+   📊 Modelo tiene action_space: 5 dimensiones
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+
+🤖 Cargando modelo desde: ./model.zip
+
+📊 Espacios de observación:
+   Modelo: Box(-50000000.0, 50000000.0, (19,), float32)
+   Entorno: Box(-50000000.0, 50000000.0, (19,), float32)
+
+📊 DESGLOSE DEL MODELO:
+   Dimensiones: 19
+   Shape: (19,)
+
+📊 DESGLOSE DEL ENTORNO:
+   Dimensiones: 19
+   Shape: (19,)
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+   ✅ Espacios coinciden, modelo cargado correctamente
+⚠️  Algoritmo SAC no reconocido, usando SAC
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+✅ Modelo cargado: SAC
+   - Entrada: (19,)
+   - Salida: (5,)
+
+🧪 EJECUTANDO PRUEBA EN PRODUCCIÓN
+   Episodios: 1
+   Pasos máximos por episodio: 288
+
+📊 Episodio de prueba #1
+
+============================================================
+🎬 EPISODIO DE PRODUCCIÓN #1
+   Inicio: 2026-01-30 23:11:14
+============================================================
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.85078776  0.47814608 -0.10412621 -0.5711572  -0.9398406 ]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.85078776  0.47814608 -0.10412621 -0.5711572  -0.9398406 ]
+   Rango: [-0.9398, 0.8508]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.          0.          0.4479369   0.21442139 15.9023905 ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:
+   [0] ZonaNorth                           → input_number.zona_north                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [1] ZonaSouth                           → input_number.zona_south                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [2] ZonaEast                            → input_number.zona_east                   = 0.4479
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [3] ZonaWest                            → input_number.zona_west                   = 0.2144
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [4] Temperatura_Calefaccion_Schedule    → input_number.temperatura_calefaccion     = 15.9024
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+
+📊 PyEnvProduction - Episodio 1, Paso 1
+   Hora: 23:16
+   Variables: 15
+   Modo: homeassistant
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.8529186   0.47702432 -0.1036514  -0.56984514 -0.9414689 ]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.8529186   0.47702432 -0.1036514  -0.56984514 -0.9414689 ]
+   Rango: [-0.9415, 0.8529]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.          0.          0.4481743   0.21507743 15.877967  ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:
+   [0] ZonaNorth                           → input_number.zona_north                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [1] ZonaSouth                           → input_number.zona_south                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [2] ZonaEast                            → input_number.zona_east                   = 0.4482
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [3] ZonaWest                            → input_number.zona_west                   = 0.2151
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [4] Temperatura_Calefaccion_Schedule    → input_number.temperatura_calefaccion     = 15.8780
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+
+📊 PyEnvProduction - Episodio 1, Paso 2
+   Hora: 23:21
+   Variables: 15
+   Modo: homeassistant
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.8538537   0.4765271  -0.10344106 -0.5692628  -0.9421765 ]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.8538537   0.4765271  -0.10344106 -0.5692628  -0.9421765 ]
+   Rango: [-0.9422, 0.8539]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.          0.          0.44827947  0.2153686  15.8673525 ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:
+   [0] ZonaNorth                           → input_number.zona_north                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [1] ZonaSouth                           → input_number.zona_south                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [2] ZonaEast                            → input_number.zona_east                   = 0.4483
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [3] ZonaWest                            → input_number.zona_west                   = 0.2154
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [4] Temperatura_Calefaccion_Schedule    → input_number.temperatura_calefaccion     = 15.8674
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+
+📊 PyEnvProduction - Episodio 1, Paso 3
+   Hora: 23:26
+   Variables: 15
+   Modo: homeassistant
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.8544085   0.47623038 -0.10331565 -0.5689155  -0.94259435]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.8544085   0.47623038 -0.10331565 -0.5689155  -0.94259435]
+   Rango: [-0.9426, 0.8544]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.          0.          0.44834217  0.21554226 15.861085  ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:
+   [0] ZonaNorth                           → input_number.zona_north                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [1] ZonaSouth                           → input_number.zona_south                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [2] ZonaEast                            → input_number.zona_east                   = 0.4483
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [3] ZonaWest                            → input_number.zona_west                   = 0.2155
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [4] Temperatura_Calefaccion_Schedule    → input_number.temperatura_calefaccion     = 15.8611
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+
+📊 PyEnvProduction - Episodio 1, Paso 4
+   Hora: 23:31
+   Variables: 15
+   Modo: homeassistant
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.85478604  0.47602797 -0.10323006 -0.5686784  -0.9428779 ]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.85478604  0.47602797 -0.10323006 -0.5686784  -0.9428779 ]
+   Rango: [-0.9429, 0.8548]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.          0.          0.44838497  0.21566081 15.856832  ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:
+   [0] ZonaNorth                           → input_number.zona_north                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [1] ZonaSouth                           → input_number.zona_south                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [2] ZonaEast                            → input_number.zona_east                   = 0.4484
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [3] ZonaWest                            → input_number.zona_west                   = 0.2157
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [4] Temperatura_Calefaccion_Schedule    → input_number.temperatura_calefaccion     = 15.8568
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+
+📊 PyEnvProduction - Episodio 1, Paso 5
+   Hora: 23:36
+   Variables: 15
+   Modo: homeassistant
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.85503197  0.47589922 -0.10313314 -0.5684704  -0.94307154]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.85503197  0.47589922 -0.10313314 -0.5684704  -0.94307154]
+   Rango: [-0.9431, 0.8550]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.          0.          0.44843343  0.21576479 15.853927  ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:
+   [0] ZonaNorth                           → input_number.zona_north                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [1] ZonaSouth                           → input_number.zona_south                  = 0.0000
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [2] ZonaEast                            → input_number.zona_east                   = 0.4484
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [3] ZonaWest                            → input_number.zona_west                   = 0.2158
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+   [4] Temperatura_Calefaccion_Schedule    → input_number.temperatura_calefaccion     = 15.8539
+      ✅ Respuesta OK (200)
+      ✅ Enviado correctamente
+
+📊 PyEnvProduction - Episodio 1, Paso 6
+   Hora: 23:41
+   Variables: 15
+   Modo: homeassistant
+
+   📥 Acción del modelo (RAW, sin procesar):
+      Valores originales: [ 0.8552172   0.47580302 -0.10305202 -0.568303   -0.94321907]
+      Dimensiones: 5
+
+   📊 Action space del MODELO (con el que fue entrenado):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   📊 Action space del ENTORNO (lo que necesita ahora):
+      Dimensiones: 5
+      Low:  [-1. -1. -1. -1. -1.]
+      High: [1. 1. 1. 1. 1.]
+      Rango por dimensión:
+         [0] [-1.0, 1.0]
+         [1] [-1.0, 1.0]
+         [2] [-1.0, 1.0]
+         [3] [-1.0, 1.0]
+         [4] [-1.0, 1.0]
+
+   ✅ Action spaces coinciden perfectamente:
+      - Mismas dimensiones: 5
+      - Mismos rangos: ✓
+   ✅ Pasando acción normalizada (wrapper la procesará, bridge intentará corregir)
+   🔧 Usando acción normalizada original (evitando np.rint del wrapper)
+
+📤 Acción recibida del wrapper: [ 0.8552172   0.47580302 -0.10305202 -0.568303   -0.94321907]
+   Rango: [-0.9432, 0.8552]
+   → Acción todavía normalizada, desnormalizando...
+   ✅ Desnormalizada: [ 0.         0.         0.448474   0.2158485 15.851714 ]
+   Action space esperado: [[ 0.  0.  0.  0. 15.]] → [[ 0.  0.  1.  1. 45.]]
+
+📤 Enviando 5 acciones a Home Assistant:

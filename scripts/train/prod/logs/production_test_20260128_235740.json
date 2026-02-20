@@ -1,0 +1,9 @@
+[
+  {
+    "episode": 1,
+    "steps": 288,
+    "total_reward": -7414.045816421509,
+    "terminated": false,
+    "truncated": true
+  }
+]
